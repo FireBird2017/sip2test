@@ -1,0 +1,21 @@
+{
+  "name": "sip2test",
+  "description": "HTTP Client 2 SIP2 Server",
+  "version": "0.0.1",
+  "author": "Graham Cox <graham@grahamcox.co.uk>",
+  "dependencies": {
+    "express": "~3.4.8",
+    "q": "~1.0.0"
+  },
+  "devDependencies": {
+    "mocha": "~1.17.1",
+    "should": "~3.1.2",
+    "mocha-as-promised": "~2.0.0"
+  },
+  "bin": {},
+  "scripts": {
+    "start": "node src/main/main.js",
+    "test": "mocha --reporter spec --recursive src/spec"
+  },
+  "licenses": []
+}
