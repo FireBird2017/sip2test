@@ -47,11 +47,38 @@ describe("sip2/messageSchema", function() {
         it("should have four named parameters", function() {
             schema.numNamedParameters.should.equal(4);
         });
+        it("should have the correct keys", function() {
+            schema.parameterKeys.should.have.lengthOf(4);
+            schema.parameterKeys.should.and.containEql("AO")
+                .and.containEql("AA")
+                .and.containEql("AC")
+                .and.containEql("AD");
+        });
         it("should have a named parameter 'AO' called 'institutionId'", function() {
             schema.getNamedParameterByKey("AO").name.should.equal("institutionId");
         });
         it("should have a named parameter called 'institutionId'", function() {
             should.exist(schema.getNamedParameterByName("institutionId"));
+        });
+    });
+    describe("All Parameters", function() {
+        it("should have the correct names", function() {
+            schema.parameterNames.should.have.lengthOf(6);
+            schema.parameterNames.should.and.containEql("language")
+                .and.containEql("transactionDate")
+                .and.containEql("institutionId")
+                .and.containEql("patronIdentifier")
+                .and.containEql("terminalPassword")
+                .and.containEql("patronPassword");
+        });
+        it("should have a parameter called 'transactionDate'", function() {
+            should.exist(schema.getParameterByName("transactionDate"));
+        });
+        it("should have a parameter called 'patronPassword'", function() {
+            should.exist(schema.getParameterByName("patronPassword"));
+        });
+        it("should not have a parameter called 'iDontExist'", function() {
+            should.not.exist(schema.getParameterByName("iDontExist"));
         });
     });
 });

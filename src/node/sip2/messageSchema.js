@@ -30,6 +30,26 @@ function MessageSchema(id, name) {
             get: function() {
                 return this[namedParametersKey].length;
             }
+        },
+        parameterKeys: {
+            enumerable: true,
+            get: function() {
+                return this[namedParametersKey].map(function(p) {
+                    return p.key;
+                }).sort();
+            }
+        },
+        parameterNames: {
+            enumerable: true,
+            get: function() {
+                var namedNames = this[namedParametersKey].map(function(p) {
+                        return p.name;
+                    }),
+                    fixedNames = this[fixedParametersKey].map(function(p) {
+                        return p.name;
+                    });
+                return namedNames.concat(fixedNames).sort();
+            }
         }
     });
 
@@ -63,6 +83,12 @@ MessageSchema.prototype = {
         return this[namedParametersKey].find(function(e) {
             return e.name === name;
         });
+    },
+    getParameterByName: function(name) {
+        var fixed = this.getFixedParameterByName(name),
+            named = this.getNamedParameterByName(name);
+
+        return fixed || named;
     }
 }
 
