@@ -18,8 +18,8 @@
   },
   "bin": {},
   "scripts": {
-    "start": "node src/main/node/main.js",
-    "test": "mocha --reporter spec --recursive src/spec/node"
+    "start": "node src/node/main.js",
+    "test": "mocha --reporter spec --recursive src/node"
   },
   "licenses": []
 }
