@@ -4,6 +4,7 @@ var express = require("express"),
 var app = express();
 
 app.use(logger("dev"));
+app.use(express.static("src/main/public"));
 
 app.get("/", function(req, res) {
     res.send("Hello, World!");
