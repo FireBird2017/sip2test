@@ -1,12 +1,15 @@
 var express = require("express"),
+    bodyParser = require("body-parser"),
     logger = require("morgan");
 
 var app = express();
 
 app.use(logger("dev"));
 app.use(express.static("src/main/public"));
+app.use(bodyParser.json());
 
-app.get("/", function(req, res) {
+app.post("/api/connect", function(req, res) {
+    console.log(req.body);
     res.send("Hello, World!");
 });
 
