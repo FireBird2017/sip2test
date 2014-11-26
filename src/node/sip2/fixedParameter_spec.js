@@ -13,6 +13,18 @@ describe("sip2/fixedParameter", function() {
         it("should have a type", function() {
             param.type.should.equal("string");
         });
+        it("should be impossible to change the name", function() {
+            param.name = "changed";
+            param.name.should.equal("language");
+        });
+        it("should be impossible to change the size", function() {
+            param.size = "changed";
+            param.size.should.equal(3);
+        });
+        it("should be impossible to change the type", function() {
+            param.type = "changed";
+            param.type.should.equal("string");
+        });
     });
 });
 
