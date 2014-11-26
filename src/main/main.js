@@ -1,9 +1,13 @@
 var express = require("express"),
     bodyParser = require("body-parser"),
+    errorHandler = require("errorhandler"),
+    responseTime = require("response-time"),
     logger = require("morgan");
 
 var app = express();
 
+app.use(errorHandler());
+app.use(responseTime());
 app.use(logger("dev"));
 app.use(express.static("src/main/public"));
 app.use(bodyParser.json());
