@@ -88,6 +88,24 @@ describe("sip2/types/string", function() {
                     .and.contains_error("max_length");
             });
         });
+        describe("Fixed Length", function() {
+            var type = new StringType()
+                .withLength(3);
+            it("Should not accept the string '00'", function() {
+                type.validateInput("00").should.be.an.Array
+                    .and.not.be.empty
+                    .and.contains_error("min_length");
+            });
+            it("Should accept the string '000'", function() {
+                type.validateInput("000").should.be.an.Array
+                    .and.be.empty;
+            });
+            it("Should not accept the string '0000'", function() {
+                type.validateInput("0000").should.be.an.Array
+                    .and.not.be.empty
+                    .and.contains_error("max_length");
+            });
+        });
         describe("Options", function() {
             var type = new StringType()
                 .withEnumeratedOption("000")

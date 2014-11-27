@@ -72,7 +72,11 @@ StringType.prototype = {
     },
     withLength: function(min, max) {
         this.withMinLength(min);
-        this.withMaxLength(max);
+        if (max === undefined) {
+            this.withMaxLength(min);
+        } else {
+            this.withMaxLength(max);
+        }
         return this;
     },
     withEnumeratedOption: function(v) {
