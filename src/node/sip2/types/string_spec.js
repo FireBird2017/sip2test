@@ -50,6 +50,17 @@ describe("sip2/types/string", function() {
             });
         });
         describe("Max Length", function() {
+            var type = new StringType()
+                .withMaxLength(3);
+            it("Should accept the string '000'", function() {
+                type.validateInput("000").should.be.an.Array
+                    .and.be.empty;
+            });
+            it("Should not accept the string '0000'", function() {
+                type.validateInput("0000").should.be.an.Array
+                    .and.not.be.empty
+                    .and.contains_error("max_length");
+            });
         });
         describe("Options", function() {
         });
