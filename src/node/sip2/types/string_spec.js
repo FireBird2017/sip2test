@@ -22,6 +22,21 @@ describe("sip2/types/string", function() {
             });
         });
         describe("Min Length", function() {
+            var type = new StringType()
+                .withMinLength(3);
+            it("Should accept the string '000'", function() {
+                type.validateInput("000").should.be.an.Array
+                    .and.be.empty;
+            });
+            it("Should not accept the string '00'", function() {
+                type.validateInput("00").should.be.an.Array
+                    .and.not.be.empty
+                    .and.match(function(errors) {
+                        return errors.find(function(e) {
+                            return e.key == "min_length";
+                        }) != undefined;
+                    });
+            });
         });
         describe("Max Length", function() {
         });
