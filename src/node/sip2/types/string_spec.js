@@ -1,26 +1,9 @@
 require("es6-shim");
 
 var should = require("should"),
-    assert = require("assert"),
     StringType = require("./string");
 
-should.Assertion.add(
-    "contains_error",
-    function(key) {
-        this.params = {
-            operator: "contains the error key",
-            expected: key
-        };
-        var errors = this.obj;
-        var foundError = errors.find(function(e) {
-            return e.key == key;
-        });
-        if (foundError === undefined) {
-            assert.fail();
-        }
-    },
-    false
-);
+require("./should_contains_error");
 
 describe("sip2/types/string", function() {
     describe("Validation", function() {
