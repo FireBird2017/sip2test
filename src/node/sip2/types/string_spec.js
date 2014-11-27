@@ -89,6 +89,23 @@ describe("sip2/types/string", function() {
             });
         });
         describe("Options", function() {
+            var type = new StringType()
+                .withEnumeratedOption("000")
+                .withEnumeratedOption("001");
+            it("Should accept the string '000'", function() {
+                type.validateInput("000").should.be.an.Array
+                    .and.be.empty;
+            });
+            it("Should accept the string '001'", function() {
+                type.validateInput("001").should.be.an.Array
+                    .and.be.empty;
+            });
+            it("Should not accept the string '002'", function() {
+                type.validateInput("002").should.be.an.Array
+                    .and.not.be.empty
+                    .and.contains_error("enumerated_option");
+            });
+
         });
     });
 });
