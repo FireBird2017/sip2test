@@ -1,7 +1,26 @@
 require("es6-shim");
 
 var should = require("should"),
+    assert = require("assert"),
     StringType = require("./string");
+
+should.Assertion.add(
+    "contains_error",
+    function(key) {
+        this.params = {
+            operator: "contains the error key",
+            expected: key
+        };
+        var errors = this.obj;
+        var foundError = errors.find(function(e) {
+            return e.key == key;
+        });
+        if (foundError === undefined) {
+            assert.fail();
+        }
+    },
+    false
+);
 
 describe("sip2/types/string", function() {
     describe("Validation", function() {
@@ -14,11 +33,7 @@ describe("sip2/types/string", function() {
             it("Should not accept the number 5", function() {
                 type.validateInput(5).should.be.an.Array
                     .and.not.be.empty
-                    .and.match(function(errors) {
-                        return errors.find(function(e) {
-                            return e.key == "type_mismatch";
-                        }) != undefined;
-                    });
+                    .and.contains_error("type_mismatch");
             });
         });
         describe("Min Length", function() {
@@ -31,11 +46,7 @@ describe("sip2/types/string", function() {
             it("Should not accept the string '00'", function() {
                 type.validateInput("00").should.be.an.Array
                     .and.not.be.empty
-                    .and.match(function(errors) {
-                        return errors.find(function(e) {
-                            return e.key == "min_length";
-                        }) != undefined;
-                    });
+                    .and.contains_error("min_length");
             });
         });
         describe("Max Length", function() {
