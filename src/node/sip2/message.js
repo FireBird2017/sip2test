@@ -36,12 +36,31 @@ Message.prototype = {
         return this[valuesKey][p];
     },
     setProperty: function(p, v) {
-        this[valuesKey][p] = v;
+        var schemaProperty = this.schema.getParameterByName(p),
+            errors;
+        if (schemaProperty) {
+            errors = schemaProperty.type.validateInput(v);
+        } else {
+            errors = [{
+                key: "unknown_field",
+                message: "The requested field doesn't exist for this message"
+            }];
+        }
+
+        if (errors === undefined || errors.length == 0) {
+            this[valuesKey][p] = v;
+        }
+        return errors;
     },
     setProperties: function(values) {
+        var errors = {};
         Object.keys(values).forEach(function(p) {
-            this.setProperty(p, values[p]);
+            var validation = this.setProperty(p, values[p]);
+            if (validation !== undefined && validation.length > 0) {
+                errors[p] = validation;
+            }
         }.bind(this));
+        return errors;
     }
 };
 
