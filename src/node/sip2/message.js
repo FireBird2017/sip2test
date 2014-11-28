@@ -1,6 +1,12 @@
 var Symbol = require("symbol"),
     valuesKey = Symbol("values");
 
+/**
+ * Constructor for an actual message that is sent or received
+ * @constructor
+ * @param schema {MessageSchema} The schema of the message
+ * @param values {Object} The initial values for the message
+ */
 function Message(schema, values) {
     Object.defineProperties(this, {
         schema: {
