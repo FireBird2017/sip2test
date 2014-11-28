@@ -6,6 +6,13 @@ var should = require("should"),
 require("./should_contains_error");
 
 describe("sip2/types/integer", function() {
+    describe("Formatting", function() {
+        var type = new IntegerType();
+        it("Should format a simple number", function() {
+            type.format(42).should.be.a.String
+                .and.equal("42");
+        });
+    });
     describe("Validation", function() {
         describe("No restrictions", function() {
             var type = new IntegerType();

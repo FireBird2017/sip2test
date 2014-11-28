@@ -7,6 +7,19 @@ var should = require("should"),
 require("./should_contains_error");
 
 describe("sip2/types/datetime", function() {
+    describe("Formatting", function() {
+        var type = new DateTimeType();
+        it("Should format a simple date in UTC", function() {
+            var time = moment("2014-11-28T16:19:00Z");
+            type.format(time).should.be.a.String
+                .and.equal("20141128   Z161900");
+        });
+        it("Should format a simple date in EST", function() {
+            var time = moment.tz("2014-11-28T11:19:00", "America/New_York");
+            type.format(time).should.be.a.String
+                .and.equal("20141128   Z161900");
+        });
+    });
     describe("Validation", function() {
         var type = new DateTimeType();
         it("Should accept the current Moment", function() {

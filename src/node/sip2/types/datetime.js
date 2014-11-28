@@ -10,6 +10,14 @@ function DateTimeType() {
 
 DateTimeType.prototype = {
     /**
+     * Format up the provided value
+     * @param v {Number} The value to format
+     * @return the formatted value
+     */
+    format: function(v) {
+        return v.tz("UTC").format("YYYYMMDD[   Z]HHmmss");
+    },
+    /**
      * Validate the provided value is correct for this data type
      * @param v {Any} the value to validate
      * @return any validation errors

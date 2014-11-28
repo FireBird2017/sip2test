@@ -6,6 +6,13 @@ var should = require("should"),
 require("./should_contains_error");
 
 describe("sip2/types/string", function() {
+    describe("Formatting", function() {
+        var type = new StringType();
+        it("Should format a simple string", function() {
+            type.format("Hello").should.be.a.String
+                .and.equal("Hello");
+        });
+    });
     describe("Validation", function() {
         describe("No restrictions", function() {
             var type = new StringType();
