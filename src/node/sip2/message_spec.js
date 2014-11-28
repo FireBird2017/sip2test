@@ -104,6 +104,25 @@ describe("sip2/message", function() {
             validation.institutionId.should.not.be.empty
                 .and.contains_error("type_mismatch");
         });
+        it("validates the entire message", function() {
+            var message = new Message(schema);
+            message.institutionId = 91475;
+            message.language = "000";
+
+            var validation = message.validate();
+
+            validation.should.not.have.property("language");
+            validation.should.have.property("transactionDate");
+            validation.should.have.property("institutionId");
+            validation.should.not.have.property("patronIdentifier");
+            validation.should.not.have.property("terminalPassword");
+            validation.should.not.have.property("patronPassword");
+
+            validation.transactionDate.should.not.be.empty
+                .and.contains_error("required_field");
+            validation.institutionId.should.not.be.empty
+                .and.contains_error("type_mismatch");
+        });
     });
 });
 

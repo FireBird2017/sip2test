@@ -64,9 +64,8 @@ Message.prototype = {
             }];
         }
 
-        if (errors === undefined || errors.length == 0) {
-            this[valuesKey][p] = v;
-        }
+        // Set the invalid value anyway
+        this[valuesKey][p] = v;
         return errors;
     },
     /**
@@ -83,6 +82,42 @@ Message.prototype = {
             }
         }.bind(this));
         return errors;
+    },
+    /**
+     * Perform validation of the entire message, checking that all of the properties are correct
+     * @return {Object} collection of properties that had any validation errors
+     */
+    validate: function() {
+        var validation = {};
+
+        this.schema.parameterNames.forEach(function(p) {
+            var value = this.getProperty(p),
+                schemaProperty = this.schema.getParameterByName(p),
+                errors;
+
+            if (schemaProperty) {
+                if (value === undefined) {
+                    if (schemaProperty.required) {
+                        errors = [{
+                            key: "required_field",
+                            message: "The requested field is required but not present"
+                        }];
+                    }
+                } else {
+                    errors = schemaProperty.type.validateInput(value);
+                }
+            } else {
+                errors = [{
+                    key: "unknown_field",
+                    message: "The requested field doesn't exist for this message"
+                }];
+            }
+
+            if (errors !== undefined && errors.length > 0) {
+                validation[p] = errors;
+            }
+        }.bind(this));
+        return validation;
     }
 };
 

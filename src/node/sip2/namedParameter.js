@@ -14,6 +14,11 @@ function NamedParameter(name, key, type) {
             value: type,
             writable: false,
             enumerable: true
+        },
+        required: {
+            value: false,
+            writable: false,
+            enumerable: true
         }
     });
 };

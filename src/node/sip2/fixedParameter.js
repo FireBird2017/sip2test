@@ -14,6 +14,11 @@ function FixedParameter(name, size, type) {
             value: type,
             writable: false,
             enumerable: true
+        },
+        required: {
+            value: true,
+            writable: false,
+            enumerable: true
         }
     });
 };
