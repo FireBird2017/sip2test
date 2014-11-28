@@ -37,6 +37,17 @@ function Message(schema, values) {
     }
 }
 
+/**
+ * Parse the provided SIP2 message into a Message object
+ * @param schema {MessageSchema} The schema of the message to parse
+ * @param message {String} The message to parse
+ * @return {Message} the parsed message
+ */
+Message.parse = function(schema, message) {
+    var parsedValues = {};
+    return new Message(schema, parsedValues);
+}
+
 Message.prototype = {
     /**
      * Get the current value of a property in the message

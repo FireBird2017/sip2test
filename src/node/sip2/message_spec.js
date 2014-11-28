@@ -150,6 +150,29 @@ describe("sip2/message", function() {
             });
         });
     });
+    describe("Parse", function() {
+        describe("Fully Populated", function() {
+            var message = Message.parse(schema, "2300020141128   Z162800|AAcoxg|ACpassword|ADsecret|AO91475");
+            it("Should have a Language", function() {
+                message.language.should.equal("000");
+            });
+            it("Should have a Transaction Date", function() {
+                message.transactionDate.should.equal("000");
+            });
+            it("Should have an Institution ID", function() {
+                message.institutionId.should.equal("000");
+            });
+            it("Should have a Patron Identifier", function() {
+                message.patronIdentifier.should.equal("000");
+            });
+            it("Should have a Terminal Password", function() {
+                message.terminalPassword.should.equal("000");
+            });
+            it("Should have a Patron Password", function() {
+                message.patronPassword.should.equal("000");
+            });
+        });
+    });
 });
 
 
