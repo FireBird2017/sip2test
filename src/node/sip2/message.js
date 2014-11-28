@@ -5,7 +5,7 @@ var Symbol = require("symbol"),
  * Constructor for an actual message that is sent or received
  * @constructor
  * @param schema {MessageSchema} The schema of the message
- * @param values {Object} The initial values for the message
+ * @param [values] {Object} The initial values for the message
  */
 function Message(schema, values) {
     Object.defineProperties(this, {
@@ -38,9 +38,20 @@ function Message(schema, values) {
 }
 
 Message.prototype = {
+    /**
+     * Get the current value of a property in the message
+     * @param p {String} The property name
+     * @return {Any} The property value
+     */
     getProperty: function(p) {
         return this[valuesKey][p];
     },
+    /**
+     * Set the value of a property in the message
+     * @param p {String} The property name
+     * @param v {Any} The property value
+     * @return {Array} Collection of validation errors from setting the property. Empty if no errors occurred
+     */
     setProperty: function(p, v) {
         var schemaProperty = this.schema.getParameterByName(p),
             errors;
@@ -58,6 +69,11 @@ Message.prototype = {
         }
         return errors;
     },
+    /**
+     * Set multiple properties in the message in one go
+     * @param values {Object} The collection of values keyed by the property name
+     * @return {Object} collection of properties that had any validation errors
+     */
     setProperties: function(values) {
         var errors = {};
         Object.keys(values).forEach(function(p) {
