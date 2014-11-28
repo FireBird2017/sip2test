@@ -89,6 +89,22 @@ MessageSchema.prototype = {
             named = this.getNamedParameterByName(name);
 
         return fixed || named;
+    },
+    iterateFixedParameters: function(cb) {
+        var fixed = this[fixedParametersKey];
+        fixed.forEach(function(p) {
+            cb(p);
+        });
+    },
+    iterateNamedParameters: function(cb){
+        var named = this[namedParametersKey];
+        var namedHash = {};
+        named.forEach(function(p) {
+            namedHash[p.key] = p;
+        });
+        Object.keys(namedHash).sort().forEach(function(k) {
+            cb(namedHash[k]);
+        });
     }
 }
 

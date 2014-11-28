@@ -118,6 +118,35 @@ Message.prototype = {
             }
         }.bind(this));
         return validation;
+    },
+    /**
+     * Format up the entire message into a valid SIP2 string
+     * @return {String} the formatted up message
+     */
+    format: function() {
+        var schema = this.schema,
+            output;
+
+        output = schema.id;
+        schema.iterateFixedParameters(function(p) {
+            var paramName = p.name,
+                paramType = p.type,
+                paramValue = this.getProperty(paramName);
+
+            output += paramType.format(paramValue);
+        }.bind(this));
+
+        schema.iterateNamedParameters(function(p) {
+            var paramName = p.name,
+                paramKey = p.key,
+                paramType = p.type,
+                paramValue = this.getProperty(paramName);
+
+            if (paramValue !== undefined) {
+                output += "|" + paramKey + paramType.format(paramValue);
+            }
+        }.bind(this));
+        return output;
     }
 };
 

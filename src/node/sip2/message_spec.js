@@ -1,4 +1,5 @@
 var should = require("should"),
+    moment = require("moment-timezone"),
     Message = require("./message"),
     types = require("./types"),
     MessageSchema = require("./messageSchema");
@@ -122,6 +123,31 @@ describe("sip2/message", function() {
                 .and.contains_error("required_field");
             validation.institutionId.should.not.be.empty
                 .and.contains_error("type_mismatch");
+        });
+    });
+    describe("Format", function() {
+        describe("Fully Populated", function() {
+            var formatted = new Message(schema, {
+                language: "000",
+                transactionDate: moment("2014-11-28T16:28:00Z"),
+                institutionId: "91475",
+                patronIdentifier: "coxg",
+                terminalPassword: "password",
+                patronPassword: "secret"
+            }).format();
+            it("Should be as expected", function() {
+                formatted.should.equal("2300020141128   Z162800|AAcoxg|ACpassword|ADsecret|AO91475");
+            });
+        });
+        describe("Partially Populated", function() {
+            var formatted = new Message(schema, {
+                language: "000",
+                transactionDate: moment("2014-11-28T16:28:00Z"),
+                patronIdentifier: "coxg"
+            }).format();
+            it("Should be as expected", function() {
+                formatted.should.equal("2300020141128   Z162800|AAcoxg");
+            });
         });
     });
 });
