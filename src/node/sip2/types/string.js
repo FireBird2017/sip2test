@@ -1,5 +1,9 @@
 var util = require("util");
 
+/**
+ * Datatype representation for a String type
+ * @constructor
+ */
 function StringType() {
     Object.defineProperties(this, {
         minLength: {
@@ -21,6 +25,19 @@ function StringType() {
 }
 
 StringType.prototype = {
+    /**
+     * Format up the provided value
+     * @param v {String} The value to format
+     * @return the formatted value
+     */
+    format: function(v) {
+        return v;
+    },
+    /**
+     * Validate the provided value is correct for this data type
+     * @param v {Any} the value to validate
+     * @return any validation errors
+     */
     validateInput: function(v) {
         var errors = [];
         if (typeof(v) !== "string") {

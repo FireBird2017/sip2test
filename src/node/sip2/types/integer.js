@@ -1,5 +1,9 @@
 var util = require("util");
 
+/**
+ * Datatype representation for an Integer type
+ * @constructor
+ */
 function IntegerType() {
     Object.defineProperties(this, {
         min: {
@@ -16,6 +20,11 @@ function IntegerType() {
 }
 
 IntegerType.prototype = {
+    /**
+     * Validate the provided value is correct for this data type
+     * @param v {Any} the value to validate
+     * @return any validation errors
+     */
     validateInput: function(v) {
         var errors = [];
         if (!(typeof(v) == "number" && v % 1 === 0)) {
