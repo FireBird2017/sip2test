@@ -28,9 +28,17 @@ StringType.prototype = {
     /**
      * Format up the provided value
      * @param v {String} The value to format
-     * @return the formatted value
+     * @return {String} the formatted value
      */
     format: function(v) {
+        return v;
+    },
+    /**
+     * Parse the given string as a string
+     * @param v {String} The value to parse
+     * @return {String} the parsed value
+     */
+    parse: function(v) {
         return v;
     },
     /**

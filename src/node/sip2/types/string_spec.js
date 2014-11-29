@@ -13,6 +13,13 @@ describe("sip2/types/string", function() {
                 .and.equal("Hello");
         });
     });
+    describe("Parsing", function() {
+        var type = new StringType();
+        it("Should parse a simple string", function() {
+            type.parse("Hello").should.be.a.String
+                .and.equal("Hello");
+        });
+    });
     describe("Validation", function() {
         describe("No restrictions", function() {
             var type = new StringType();

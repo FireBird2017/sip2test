@@ -13,6 +13,13 @@ describe("sip2/types/integer", function() {
                 .and.equal("42");
         });
     });
+    describe("Parsing", function() {
+        var type = new IntegerType();
+        it("Should parse a simple number", function() {
+            type.parse("42").should.be.a.Number
+                .and.equal(42);
+        });
+    });
     describe("Validation", function() {
         describe("No restrictions", function() {
             var type = new IntegerType();
