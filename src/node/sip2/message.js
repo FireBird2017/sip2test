@@ -44,7 +44,42 @@ function Message(schema, values) {
  * @return {Message} the parsed message
  */
 Message.parse = function(schema, message) {
-    var parsedValues = {};
+    var parsedValues = {},
+        offset = schema.id.length;
+
+    schema.iterateFixedParameters(function(p) {
+        var paramName = p.name,
+            paramType = p.type,
+            paramLength = p.size,
+            paramValue = message.substr(offset, paramLength),
+            parsedValue = paramType.parse(paramValue);
+
+        offset += paramLength;
+        parsedValues[paramName] = parsedValue;
+    });
+    var namedArea = message.substring(offset),
+        namedFields = namedArea.split("|");
+
+    namedFields.filter(function(p) {
+        return p.length > 2;
+    }).map(function(p) {
+        var key = p.substring(0, 2),
+            value = p.substring(2);
+        return {key: key, value: value};
+    }).map(function(p) {
+        var param = schema.getNamedParameterByKey(p.key);
+        return {key: p.key, value: p.value, param: param};
+    }).filter(function(p) {
+        return p.param != undefined;
+    }).forEach(function(p) {
+        var paramName = p.param.name,
+            paramType = p.param.type,
+            paramValue = p.value,
+            parsedValue = paramType.parse(paramValue);
+
+        parsedValues[paramName] = parsedValue;
+    });
+
     return new Message(schema, parsedValues);
 }
 

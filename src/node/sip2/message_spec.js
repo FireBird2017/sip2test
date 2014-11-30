@@ -1,4 +1,5 @@
 var should = require("should"),
+    assert = require("assert"),
     moment = require("moment-timezone"),
     Message = require("./message"),
     types = require("./types"),
@@ -157,19 +158,20 @@ describe("sip2/message", function() {
                 message.language.should.equal("000");
             });
             it("Should have a Transaction Date", function() {
-                message.transactionDate.should.equal("000");
+                var time = moment("2014-11-28T16:28:00Z");
+                assert(time.isSame(message.transactionDate));
             });
             it("Should have an Institution ID", function() {
-                message.institutionId.should.equal("000");
+                message.institutionId.should.equal("91475");
             });
             it("Should have a Patron Identifier", function() {
-                message.patronIdentifier.should.equal("000");
+                message.patronIdentifier.should.equal("coxg");
             });
             it("Should have a Terminal Password", function() {
-                message.terminalPassword.should.equal("000");
+                message.terminalPassword.should.equal("password");
             });
             it("Should have a Patron Password", function() {
-                message.patronPassword.should.equal("000");
+                message.patronPassword.should.equal("secret");
             });
         });
     });
