@@ -1,6 +1,7 @@
 require("es6-shim");
 
 var should = require("should"),
+    assert = require("assert"),
     moment = require("moment-timezone"),
     DateTimeType = require("./datetime");
 
@@ -18,6 +19,16 @@ describe("sip2/types/datetime", function() {
             var time = moment.tz("2014-11-28T11:19:00", "America/New_York");
             type.format(time).should.be.a.String
                 .and.equal("20141128   Z161900");
+        });
+    });
+    describe("Parsing", function() {
+        var type = new DateTimeType();
+        it("Should parse a simple date in UTC", function() {
+            var parsed = type.parse("20141128   Z161900");
+            assert(moment.isMoment(parsed));
+            var expected = moment("2014-11-28T16:19:00Z");
+            assert(expected.isSame(parsed));
+
         });
     });
     describe("Validation", function() {

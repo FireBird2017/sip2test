@@ -18,6 +18,14 @@ DateTimeType.prototype = {
         return v.tz("UTC").format("YYYYMMDD[   Z]HHmmss");
     },
     /**
+     * Parse the given string as an Integer
+     * @param v {String} The value to parse
+     * @return {Number} the parsed value
+     */
+    parse: function(v) {
+        return moment(v, "YYYYMMDD[   Z]HHmmss").tz("UTC");
+    },
+    /**
      * Validate the provided value is correct for this data type
      * @param v {Any} the value to validate
      * @return any validation errors
