@@ -16,11 +16,11 @@ function MessageCatalog() {
 MessageCatalog.prototype = {
     /**
      * Add a new message schema to the catalog
-     * @param message {MessageSchema} the schema to add
+     * @param schema {MessageSchema} the schema to add
      * @return {MessageCatalog} this, for chaining
      */
-    withMessage: function(message) {
-        this[messagesKey].push(message);
+    withSchema: function(schema) {
+        this[messagesKey].push(schema);
         return this;
     },
     /**
