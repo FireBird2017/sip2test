@@ -12,7 +12,8 @@
     "response-time": "^2.2.0",
     "symbol": "^0.2.1",
     "moment-timezone": "^0.2.5",
-    "es6-shim": "~0.21.0"
+    "es6-shim": "~0.21.0",
+    "node-uuid": "~1.4.1"
   },
   "devDependencies": {
     "mocha": "~1.17.1",

@@ -2,7 +2,8 @@ var express = require("express"),
     bodyParser = require("body-parser"),
     errorHandler = require("errorhandler"),
     responseTime = require("response-time"),
-    logger = require("morgan");
+    logger = require("morgan"),
+    api = require("./api");
 
 var app = express();
 
@@ -12,9 +13,11 @@ app.use(logger("dev"));
 app.use(express.static("src/main/public"));
 app.use(bodyParser.json());
 
-app.post("/api/connect", function(req, res) {
-    console.log(req.body);
-    res.send("Hello, World!");
+api(app);
+
+app.use(function(err, req, res, next) {
+    console.log(err);
+    res.status(400).send(err.message);
 });
 
 var server = app.listen(3000, function() {
